@@ -28,6 +28,10 @@ post = Post.all
 		)
 end
 
+#unique = Post.create!(title: "THISISHUNIQUEBRO", body: "U WOT M8?")
+
+unique = Post.find_or_create_by(title: "LetsTryThisAgain", body: "this time it will work")
+Comment.find_or_create_by(body: "Unique Comment Body", post: unique)
 puts "Seed finished"
 puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"
