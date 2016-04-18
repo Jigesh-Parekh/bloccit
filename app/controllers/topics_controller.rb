@@ -19,7 +19,7 @@ class TopicsController < ApplicationController
 
 		if @topic.save
 			flash[:notice] = "Topic was saved successfully."
-       		redirect_to @topic	
+       		redirect_to @topic
        	else
        		flash.now[:alert] = "Error creating topic. Please try again."
        		render :new
