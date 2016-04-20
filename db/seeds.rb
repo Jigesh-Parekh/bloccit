@@ -9,18 +9,38 @@
 
 require "random_data"
 
+
+5.times do
+	User.create!(
+		name:  RandomData.random_name,
+		email: RandomData.random_email,
+		password: RandomData.random_sentence
+		)
+end
+
+users = User.all
+
+user = User.first
+user.update_attributes!(
+   email: 'jiggyfr3sh@gmail.com', # replace this with your personal email
+   password: '123456'
+ )
+
+
+
 15.times do
 	Topic.create!(
 		name: RandomData.random_sentence,
 		description: RandomData.random_paragraph)
 end
-topics. Topic.all
+topics = Topic.all
 
 
 50.times  do
     #! instructs the method to raise an error if there is a problem
     #with the data we are seeding without bang can fail without warnging
 	Post.create!(
+		user: users.sample,
 		topic: topics.sample,
 		title: RandomData.random_sentence,
 		body:  RandomData.random_paragraph
@@ -38,6 +58,7 @@ post = Post.all
 end
 
 puts "Seed finished"
+puts "#{User.count} users created"
 puts "#{Topic.count} topics created"
 puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"
