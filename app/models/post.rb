@@ -6,7 +6,8 @@ class Post < ActiveRecord::Base
 	#provides methods allow to retrieve comments that belong to post
 
 	default_scope {order('created_at DESC')}
-
+	scope :ordered_by_title, -> { order('title DESC')}
+	scope :ordered_by_reverse_created_at, -> { order('created_at ASC')}
 	validates :title, length: {minimum: 5}, presence: true
 	validates :body, length: { minimum: 20}, presence: true
 	validates :topic, presence: true
