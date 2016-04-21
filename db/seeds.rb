@@ -20,12 +20,20 @@ end
 
 users = User.all
 
-user = User.first
-user.update_attributes!(
-   email: 'jiggyfr3sh@gmail.com', # replace this with your personal email
-   password: '123456'
+ # Create an admin user
+ admin = User.create!(
+   name:     'Admin User',
+   email:    'admin@example.com',
+   password: 'helloworld',
+   role:     'admin'
  )
-
+ 
+ # Create a member
+ member = User.create!(
+   name:     'Member User',
+   email:    'member@example.com',
+   password: 'helloworld'
+ )
 
 
 15.times do
