@@ -35,6 +35,12 @@ users = User.all
    password: 'helloworld'
  )
 
+moderator =  User.create!(
+   name:     'jig mod',
+   email:    'mod@example.com',
+   password: 'helloworld',
+   role: 'moderator'
+ )
 
 15.times do
 	Topic.create!(
