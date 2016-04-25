@@ -17,6 +17,7 @@ class PostsController < ApplicationController
     #allocates posts with users who created them
  #if post is sucessfully saved to databse flash notice posts a confirm message and redircts to post show view
   	if @post.save
+       @post.labels = Label.update_labels(params[:post][:labels])
   		flash[:notice] = "Post was saved"
   		redirect_to [@topic, @post]
   	else
@@ -34,6 +35,7 @@ class PostsController < ApplicationController
     @post.assign_attributes(post_params)
 
     if @post.save
+       @post.labels = Label.update_labels(params[:post][:labels])
       flash[:notice] = "Post was updated"
       redirect_to [@post.topic, @post]
     else

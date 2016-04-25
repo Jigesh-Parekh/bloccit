@@ -2,6 +2,9 @@ class Post < ActiveRecord::Base
 	belongs_to :topic
 	belongs_to :user
 	has_many :comments, dependent: :destroy
+	has_many :labelings, as: :labelable
+    has_many :labels, through: :labelings
+
 	#allows post to have many comments related to it
 	#provides methods allow to retrieve comments that belong to post
 
