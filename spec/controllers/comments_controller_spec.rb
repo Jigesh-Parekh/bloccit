@@ -8,6 +8,7 @@ let(:other_user) { User.create!(name: RandomData.random_name, email: RandomData.
 let(:my_topic) { Topic.create!(name:  RandomData.random_sentence, description: RandomData.random_paragraph) }
 let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: my_user)}
 let(:my_comment) { Comment.create!(body: 'Comment Body', post: my_post, user: my_user)}
+let(:my_top_comment) {Comment.create!(body: 'Topic Comment Body', topic: my_topic, user: my_user)}
 
  context "guest" do
      describe "POST create" do
@@ -50,7 +51,8 @@ let(:my_comment) { Comment.create!(body: 'Comment Body', post: my_post, user: my
      end
  end
 
-  context "member user doing CRUD on a comment they own" do
+
+   context "member user doing CRUD on a comment they own" do
      before do
        create_session(my_user)
      end
@@ -79,7 +81,27 @@ let(:my_comment) { Comment.create!(body: 'Comment Body', post: my_post, user: my
        end
      end
    end
+
+  context "member user doing CRUD on a comment they own to a topic" do
+     before do
+       create_session(my_user)
+     end
  
+     describe "POST create" do
+       it "increases the number of comments by 1" do
+         expect{ post :create, topic_id: my_topic.id, comment: {body: RandomData.random_sentence} }.to change(Comment,:count).by(1)
+       end
+     end
+ 
+     describe "DELETE destroy" do
+       it "deletes the comment" do
+         delete :destroy, topic_id: my_topic.id, id: my_comment.id
+         count = Comment.where({id: my_comment.id}).count
+         expect(count).to eq 0
+       end
+     end
+   end
+
 
    context "admin user doing CRUD on a comment they don't own" do
      before do
