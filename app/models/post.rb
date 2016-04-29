@@ -8,7 +8,7 @@ class Post < ActiveRecord::Base
 
 	#allows post to have many comments related to it
 	#provides methods allow to retrieve comments that belong to post
-
+	after_create :create_vote
 	default_scope {order('rank DESC')}
 
 	validates :title, length: {minimum: 5}, presence: true
@@ -33,4 +33,10 @@ class Post < ActiveRecord::Base
      new_rank = points + age_in_days
      update_attribute(:rank, new_rank)
    end
+
+   private
+   def create_vote
+   		user.votes.create(value: 1, post: self)
+   end 
+
 end
