@@ -12,6 +12,8 @@ class Post < ActiveRecord::Base
 
 	default_scope {order('rank DESC')}
 
+	scope :visible_to, -> (user) { user ? all : joins(:topic).where('topic.public' => true)}
+
 	validates :title, length: {minimum: 5}, presence: true
 	validates :body, length: { minimum: 20}, presence: true
 	validates :topic, presence: true
